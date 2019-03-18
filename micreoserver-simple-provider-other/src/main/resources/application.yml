@@ -1,0 +1,42 @@
+spring:
+  redis:
+    host: 39.106.59.144
+    port: 1115
+    database: 0 
+  #main:
+   # allow-bean-definition-overriding: true
+  application:
+    name: microserver-other
+  datasource:
+    url: jdbc:mysql://39.106.59.144:8066/TESTDB
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+   
+ 
+server:
+  port: 20004
+
+eureka:
+  instance:
+    hostname: localhost
+    metadata-map:
+      my-metadat: 我自定义的元数据
+  client:
+    #register-with-eureka: false
+    #fetch-registry: false
+    service-url:
+      defaultZone: http://root:123456@localhost:8761/eureka/
+
+      
+mybatis:
+  mapper-locations : com.example.micreoserversimpleprovideruser.dao.*xml    
+  type-aliases-packag : com.example.micreoserversimpleprovideruser.bean 
+
+#microserver-simple-provider-user: #微服务名称
+  #ribbon:
+    #NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+    #NFLoadBalancerClassName: com.netflix.loadbalancer.NoOpLoadBalancer
+    #NFLoadBalancerPingClassName:  com.netflix.loadbalancer.DummyPing.DummyPing
+    #NIWSServerListFilterClassName: org.springframework.cloud.netflix.ribbon.ZonePreferenceServerListFilter.ZonePreferenceServerListFilter
