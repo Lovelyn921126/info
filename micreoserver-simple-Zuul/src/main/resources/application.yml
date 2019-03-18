@@ -1,0 +1,72 @@
+spring:
+  #main:
+   # allow-bean-definition-overriding: true
+  application:
+    name: microserver-zuul
+
+
+server:
+  port: 20008
+
+eureka:
+  instance:
+    hostname: localhost
+    metadata-map:
+      my-metadat: 我自定义的元数据
+  client:
+    #register-with-eureka: false
+    #fetch-registry: false
+    service-url:
+      defaultZone: http://root:123456@localhost:8761/eureka/
+management:
+  endpoint:
+    health:
+      show-details: always
+  server:
+    servlet:
+      context-path: /hello
+    port: 8008
+  endpoints:
+    web:
+      base-path: /monitor
+      exposure:
+        include: '*'
+zuul:
+    host:
+        connect-timeout-millis: 3000
+        socket-timeout-millis: 3000
+    routes:
+     # microserver-info: /api-info/**
+     api-a:
+       path: /api-info/**
+       service-id: microserver-info
+     api-b:
+       path: /api-basic/**
+       service-id: service-basic   
+     #api-c:
+      # url: http://localhost:20001
+       #path: /user/** 
+microserver-info:
+    ribbon:
+        listOfServers: localhost:20001, localhost:20009              
+ribbon:
+     #ReadTimeout: 3000
+     #ConnectTimeout: 3000
+     eureka:
+        #禁用eureka动态功能
+         enabled: false 
+hystrix:
+     command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeout-in-milliseconds: 3000       
+           
+#microserver-simple-provider-user: #微服务名称
+  #ribbon:
+    #NIWSServerListClassName: com.netflix.loadbalancer.ConfigurationBasedServerList
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+    #NFLoadBalancerClassName: com.netflix.loadbalancer.NoOpLoadBalancer
+    #NFLoadBalancerPingClassName:  com.netflix.loadbalancer.DummyPing.DummyPing
+    #NIWSServerListFilterClassName: org.springframework.cloud.netflix.ribbon.ZonePreferenceServerListFilter.ZonePreferenceServerListFilter
