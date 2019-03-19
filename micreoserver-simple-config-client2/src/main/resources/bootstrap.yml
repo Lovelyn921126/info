@@ -1,0 +1,46 @@
+
+eureka:
+  client:
+    service-url:
+      #注册中心集群地址
+      defaultZone: http://localhost:8071/eureka/
+
+
+
+
+spring: 
+  kafka:
+    bootstrap-servers: 39.406.49.144:9092
+  application:
+    name: microservice-foo
+  cloud:
+    config: 
+         uri: http://localhost:8080/
+         profile: dev
+         label: master
+         discovery:
+            service-id: microserver-config-server
+            enable: true
+         fail-fast: true
+         retry:
+          max-attempts:  6
+          initial-interval: 1000
+          multiplier: 1.1
+          max-interval: 2000
+    stream:
+      kafka:
+        binder:
+          zk-nodes: 39.106.59.144:2181
+          brokers: 39.106.59.144:9092
+      bus:
+       enabled: true
+
+
+
+
+
+
+               
+
+
+
